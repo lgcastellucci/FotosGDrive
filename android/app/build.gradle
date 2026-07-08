@@ -1,0 +1,68 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    // google-services.json/plugin NÃO são necessários: google_sign_in usa
+    // diretamente o OAuth Client ID Android + SHA-1 já cadastrados no GCP.
+    // Reative o plugin "com.google.gms.google-services" apenas se decidir
+    // usar Firebase para outra coisa.
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+// Variáveis de ambiente (usadas no build via Docker) têm prioridade
+// sobre key.properties, para não precisar embutir senha no arquivo.
+def envOrProp = { String envName, String propName ->
+    def envVal = System.getenv(envName)
+    return envVal != null ? envVal : keystoreProperties[propName]
+}
+
+android {
+    namespace "com.fotosgdrive.app"
+    compileSdk 36
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    defaultConfig {
+        applicationId "com.fotosgdrive.app"
+        minSdkVersion 26
+        targetSdkVersion 36
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+    }
+
+    signingConfigs {
+        release {
+            def storeFilePath = envOrProp("STORE_FILE", "storeFile")
+            storeFile storeFilePath != null ? file(storeFilePath) : null
+            storePassword envOrProp("STORE_PASSWORD", "storePassword")
+            keyAlias envOrProp("KEY_ALIAS", "keyAlias")
+            keyPassword envOrProp("KEY_PASSWORD", "keyPassword")
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+flutter {
+    source "../.."
+}

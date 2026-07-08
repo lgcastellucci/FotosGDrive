@@ -1,0 +1,50 @@
+name: fotosgdrive
+description: Move fotos de um álbum escolhido pelo usuário para uma pasta com o mesmo nome no Google Drive e deleta localmente após upload.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Auth Google — SDK nativo (Google Play Services). Usa o seletor de
+  # contas do Android; não precisa de client_id/secret no código, só
+  # do SHA-1 do keystore cadastrado no Client ID Android no Cloud
+  # Console (mesma configuração de antes, package + SHA-1).
+  google_sign_in: ^6.2.1
+
+  # Drive API
+  googleapis: ^13.2.0
+  googleapis_auth: ^1.6.0
+
+  # Acesso a fotos / MediaStore
+  photo_manager: ^3.3.0
+
+  # HTTP
+  http: ^1.2.1
+
+  # Persistência local — guarda o nome do álbum escolhido pelo usuário
+  # no primeiro acesso, para não perguntar de novo nas próximas vezes.
+  shared_preferences: ^2.3.2
+
+  # Detecção de MIME type por extensão (jpg, png, heic, webp, gif...)
+  mime: ^1.0.5
+
+  # UI
+  cupertino_icons: ^1.0.8
+  intl: ^0.19.0
+  google_fonts: ^6.2.1
+  package_info_plus: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

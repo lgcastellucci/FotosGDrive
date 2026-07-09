@@ -37,7 +37,7 @@
   }
   .wrap{ max-width:1180px; margin:0 auto; padding:38px 24px 60px; }
 
-  .top{ text-align:center; margin-bottom:28px; }
+  .top{ text-align:center; margin-bottom:4px; }
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
     font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;
@@ -46,7 +46,7 @@
   }
   h1{
     font-family:'Space Grotesk',sans-serif; font-weight:700;
-    font-size:clamp(28px,4vw,42px); margin:0 0 8px; color:var(--gray-900);
+    font-size:clamp(18px,4vw,42px); margin:0 0 0; color:var(--gray-900);
   }
   .sub{ color:var(--gray-500); font-size:16px; max-width:560px; margin:0 auto; }
 
@@ -60,25 +60,8 @@
 
   /* --- trilha de passos --- */
   .rail{
-    background:var(--panel); border-radius:var(--radius);
-    border:1px solid #dde6f0; padding:14px; max-height:640px; overflow-y:auto;
+    visible:false;
   }
-  .rail-item{
-    display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px;
-    cursor:pointer; transition:background .15s ease; margin-bottom:2px;
-  }
-  .rail-item:hover{ background:var(--blue-50); }
-  .rail-item.active{ background:var(--blue-700); }
-  .rail-num{
-    width:26px; height:26px; min-width:26px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12px;
-    background:var(--gray-100); color:var(--gray-500);
-  }
-  .rail-item.done .rail-num{ background:var(--green); color:#fff; }
-  .rail-item.active .rail-num{ background:#fff; color:var(--blue-700); }
-  .rail-label{ font-size:13px; font-weight:500; color:var(--gray-900); line-height:1.3; }
-  .rail-item.active .rail-label{ color:#fff; }
 
   /* --- device --- */
   .device-col{ display:flex; flex-direction:column; align-items:center; }
@@ -148,11 +131,11 @@
     text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px;
   }
   .caption h2{
-    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:24px; margin:0 0 16px;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; margin:0 0 16px;
     color:var(--gray-900);
   }
   .caption ul{ margin:0; padding:0 0 0 20px; }
-  .caption li{ font-size:15.5px; line-height:1.6; margin-bottom:10px; color:#333c47; }
+  .caption li{ font-size:14px; line-height:1.6; margin-bottom:10px; color:#333c47; }
   .caption li::marker{ color:var(--blue-700); }
 
   .badge-row{ display:flex; gap:8px; margin-top:auto; padding-top:18px; flex-wrap:wrap; }
@@ -161,7 +144,6 @@
     background:var(--blue-50); color:var(--blue-700);
   }
 
-  footer{ text-align:center; margin-top:40px; color:var(--gray-500); font-size:13px; }
 
   /* --- indicador de versão (debug) --- */
   .build-tag{
@@ -173,46 +155,51 @@
 
   /* --- mobile refinements: colocadas ao final para vencer a cascata --- */
   @media (max-width: 980px){
-    .stage{ grid-template-columns: 1fr; gap:18px; margin-top:22px; }
-    .rail{ order:3; }
-    .caption{ order:2; }
-    .device-col{ order:1; }
-
-    .wrap{ padding:22px 14px 40px; }
-    .top{ margin-bottom:20px; }
+    .stage{ grid-template-columns: 1fr; gap:14px; margin-top:2px; position:relative; }
+    .caption{ order:1; }
+    .device-col{ order:2; position:relative; }
+    .wrap{ padding:8px 8px 8px; }
     .sub{ font-size:14.5px; padding:0 4px; }
 
-    /* trilha de passos vira uma faixa horizontal com scroll */
-    .rail{
-      display:flex; flex-direction:row; gap:8px; padding:10px;
-      max-height:none; overflow-x:auto; overflow-y:visible;
-      -webkit-overflow-scrolling:touch; scrollbar-width:none;
-    }
-    .rail::-webkit-scrollbar{ display:none; }
-    .rail-item{
-      flex:0 0 auto; margin-bottom:0; white-space:nowrap;
-      padding:8px 10px;
-    }
-    .rail-label{ max-width:110px; overflow:hidden; text-overflow:ellipsis; }
+    /* card de descrição: compacto, no topo, antes do celular */
+    .caption{ padding:8px 8px 8px; min-height:0; }
+    .caption-eyebrow{ font-size:10px; margin-bottom:2px; }
+    .caption h2{ font-size:14px; margin-bottom:8px; }
+    .caption li{ font-size:12px; line-height:1.45; margin-bottom:4px; }
+    .badge-row{ padding-top:10px; }
 
-    .device{ max-width:240px; border-radius:34px; padding:9px; }
-    .notch{ width:64px; height:14px; top:9px; }
-    .device-controls{ margin-top:16px; gap:10px; }
-    .nav-btn{ width:48px; height:48px; font-size:20px; }
+    /* celular grande e em destaque */
+    .device{ max-width:280px; border-radius:38px; padding:10px; }
+    .notch{ width:72px; height:15px; top:10px; }
 
-    .caption{ padding:20px 18px 18px; min-height:0; }
-    .caption h2{ font-size:20px; margin-bottom:12px; }
-    .caption li{ font-size:15px; }
+    /* setas flutuam como círculos ao lado do celular, sobre o fundo */
+    .device-controls{
+      position:absolute; top:50%; left:0; right:0;
+      display:flex; justify-content:space-between;
+      transform:translateY(-50%);
+      margin-top:0; padding:0 4px;
+      pointer-events:none;
+    }
+    .nav-btn{
+      width:46px; height:46px; font-size:19px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 6px 16px -6px rgba(13,43,107,.4);
+      pointer-events:auto;
+    }
+
+    .progress-bar{ margin-top:14px; }
+    .progress-text{ margin-top:8px; }
+
   }
 
   @media (max-width: 380px){
-    .device{ max-width:210px; }
-    h1{ font-size:24px; }
+    .device{ max-width:220px; }
+    h1{ font-size:14px; }
   }
 </style>
 </head>
 <body>
-<div class="build-tag">mobile v3 · 09/07</div>
+<div class="build-tag">mobile v4 · 09/07</div>
 <div class="wrap">
 
   <div class="top">
@@ -239,11 +226,9 @@
       <div class="caption-eyebrow" id="capEyebrow"></div>
       <h2 id="capTitle"></h2>
       <ul id="capBullets"></ul>
-      <div class="badge-row" id="capBadges"></div>
     </div>
   </div>
 
-  <footer>FotosGDrive · walkthrough gerado a partir dos prints reais do app</footer>
 </div>
 
 <script>
@@ -270,23 +255,11 @@ const screen = document.getElementById('screen');
 const capEyebrow = document.getElementById('capEyebrow');
 const capTitle = document.getElementById('capTitle');
 const capBullets = document.getElementById('capBullets');
-const capBadges = document.getElementById('capBadges');
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
-function buildRail(){
-  rail.innerHTML = STEPS.map((s,i) => (
-    '<div class="rail-item" data-i="'+i+'">' +
-      '<div class="rail-num">'+(i+1)+'</div>' +
-      '<div class="rail-label">'+s.title+'</div>' +
-    '</div>'
-  )).join('');
-  rail.querySelectorAll('.rail-item').forEach(el => {
-    el.addEventListener('click', () => { goTo(parseInt(el.dataset.i,10)); });
-  });
-}
 
 function renderTap(step){
   if(step.tapType === 'circle' && step.tap){
@@ -323,14 +296,6 @@ function goTo(i){
   capTitle.textContent = step.title;
   capBullets.innerHTML = step.bullets.map(b => '<li>'+b+'</li>').join('');
 
-  capBadges.innerHTML = '';
-  if(step.tapType !== 'none'){
-    const b = document.createElement('span');
-    b.className = 'badge';
-    b.textContent = '👆 toque destacado na tela';
-    capBadges.appendChild(b);
-  }
-
   rail.querySelectorAll('.rail-item').forEach((el,idx) => {
     el.classList.toggle('active', idx===current);
     el.classList.toggle('done', idx<current);
@@ -353,7 +318,7 @@ document.addEventListener('keydown', (e) => {
   if(e.key === 'ArrowLeft'){ goTo(current-1); }
 });
 
-buildRail();
+
 goTo(0);
 </script>
 </body>

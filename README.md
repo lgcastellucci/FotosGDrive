@@ -8,6 +8,10 @@ No primeiro acesso, o app pede login na conta Google e o nome do álbum
 (ex.: "Viagem 2026", "Aniversário da Ana"...). Esse nome fica salvo no
 aparelho e é reaproveitado nas próximas aberturas.
 
+Seu funcionamento pode ser visto em http://www.castellucci.net.br/fotosgdrive_walkthrough.html
+
+O aplicativo esta disponivel em https://play.google.com/store/apps/details?id=com.fotosgdrive.app
+
 ## Antes de buildar
 
 1. Copie `fotosgdrive-release.keystore` (o mesmo já usado na Play Store)
